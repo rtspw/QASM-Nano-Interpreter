@@ -20,7 +20,7 @@ const argv = yargs
   .parseSync()
 
 const fileArg = process.argv[2]
-const filename = path.join(__dirname, '../', fileArg)
+const filename = path.resolve(process.cwd(), fileArg)
 const runtime = new QASMRuntime({ verbose: argv.verbose })
 
 try {
