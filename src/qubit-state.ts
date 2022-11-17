@@ -1,4 +1,5 @@
 import * as cxjs from 'complex.js'
+import $c from 'ansi-colors'
 
 interface InternalQubitState {
   [bitstring: string]: cxjs.Complex;
@@ -119,10 +120,11 @@ export default class QubitState {
     keys.sort((x, y) => Number.parseInt(x, 2) - Number.parseInt(y, 2))
     const kets = keys.map(bs => {
       const amp = this.qubits[bs]
+      const fancyBS = bs.split('').map(bit => bit === '1' ? $c.bold.grey(bit) : $c.dim(bit)).join('')
       if (amp.im !== 0 || amp.re < 0) {
-        return `(${amp.toString()})|${bs}⟩`
+        return `(${$c.cyan.bold(amp.toString())})|${fancyBS}⟩`
       } else {
-        return `${amp.toString()}|${bs}⟩`
+        return `${$c.greenBright.bold(amp.toString())}|${fancyBS}⟩`
       }
     })
     return kets.join(' + ')

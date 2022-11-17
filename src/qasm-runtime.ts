@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import $c from 'ansi-colors'
 import { CharStreams, CommonTokenStream } from 'antlr4ts'
 
 import { QASMLexer } from './grammar/QASMLexer'
@@ -37,7 +38,7 @@ export default class QASMRuntime {
     const program = this.getParseTree(qasmCode)
     const bitCountVisitor = new BitCountVisitor()
     const { qubits: numOfQubits, cbits: numOfCbits } = bitCountVisitor.visit(program)
-    if (this.options.verbose) console.log(`INFO || Circuit has ${numOfQubits} qubits and ${numOfCbits} cbits`)
+    if (this.options.verbose) console.log(`${$c.dim('INFO || ')}Circuit has ${numOfQubits} qubits and ${numOfCbits} cbits`)
     const runnerVisitor = new RunnerVisitor(numOfQubits, this.options.verbose, this.metrics)
     const finalState = runnerVisitor.visit(program)
     if (this.options.runMetrics) this.metrics.calculateResults()

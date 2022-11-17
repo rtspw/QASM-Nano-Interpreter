@@ -1,3 +1,5 @@
+import $c from 'ansi-colors'
+
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { ProgramContext } from '../grammar/QASMParser'
 import { QASMVisitor } from '../grammar/QASMVisitor'
@@ -5,6 +7,7 @@ import { QASMVisitor } from '../grammar/QASMVisitor'
 import QASMRuntimeMetrics from '../qasm-runtime-metrics'
 import QubitState from '../qubit-state'
 import StatementInfoVisitor from './StatementVisitor'
+
 
 export default class RunnerVisitor extends AbstractParseTreeVisitor<QubitState> implements QASMVisitor<QubitState> {
   numOfQubits: number
@@ -32,8 +35,8 @@ export default class RunnerVisitor extends AbstractParseTreeVisitor<QubitState> 
       const { operation, args } = statementInfoVisitor.visit(statement)
 
       if (this.verbose) {
-        console.log(`INFO || State: ${qubitState.clean()}`)
-        console.log(`INFO || Operation: ${operation} ${args.map(arg => `q[${arg}]`).join(', ')}`)
+        console.log(`${$c.dim('INFO || ')}State: ${qubitState.clean()}`)
+        console.log(`${$c.dim('INFO || ')}Operation: ${operation} ${args.map(arg => `q[${arg}]`).join(', ')}`)
       }
 
       if (this.metrics) {

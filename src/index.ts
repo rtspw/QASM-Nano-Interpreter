@@ -31,7 +31,8 @@ const filename = path.resolve(process.cwd(), fileArg)
 const runtime = new QASMRuntime({ verbose: argv.verbose, runMetrics: argv.metrics })
 
 try {
-  console.log(runtime.executeFromFile(filename).toString())
+  const finalState = runtime.executeFromFile(filename)
+  console.log(`Final state: ${finalState}`)
   if (argv.metrics) {
     console.log()
     printMetrics(runtime.getMetrics())
