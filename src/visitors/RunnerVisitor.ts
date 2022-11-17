@@ -7,10 +7,12 @@ import StatementInfoVisitor from './StatementVisitor'
 
 export default class RunnerVisitor extends AbstractParseTreeVisitor<QubitState> implements QASMVisitor<QubitState> {
   numOfQubits: number
+  verbose: boolean
 
-  constructor(numOfQubits: number) {
+  constructor(numOfQubits: number, verbose = false) {
     super()
     this.numOfQubits = numOfQubits
+    this.verbose = verbose
   }
 
   protected defaultResult(): QubitState {
@@ -24,6 +26,12 @@ export default class RunnerVisitor extends AbstractParseTreeVisitor<QubitState> 
     const statementInfoVisitor = new StatementInfoVisitor()
     for (const statement of statements) {
       const { operation, args } = statementInfoVisitor.visit(statement)
+
+      if (this.verbose) {
+        console.log(`INFO || State: ${qubitState.clean()}`)
+        console.log(`INFO || Operation: ${operation} ${args.map(arg => `q[${arg}]`).join(', ')}`)
+      }
+
       if (args[0] < 0 || args[0] >= this.numOfQubits)
         throw new Error(`Tried to run ${operation} but qubit ${args[0]} is out of range`)
       switch (operation) {

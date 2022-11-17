@@ -5,7 +5,7 @@ import QASMRuntime from './qasm-runtime'
 
 const fileArg = process.argv?.[2] ?? ''
 const filename = path.join(__dirname, '../', fileArg)
-const runtime = new QASMRuntime()
+const runtime = new QASMRuntime({ verbose: true })
 
 try {
   console.log(runtime.executeFromFile(filename).toString())
