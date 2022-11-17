@@ -1,5 +1,6 @@
 import * as path from 'path'
 import yargs from 'yargs'
+import $c from 'ansi-colors'
 
 import printMetrics from './metric-printer'
 import QASMRuntime from './qasm-runtime'
@@ -19,12 +20,20 @@ const argv = yargs
     alias: 'm',
     default: false,
     type: 'boolean',
-    description: 'Whether to run metrics on execution of QASM code'
+    description: 'Whether to run metrics on execution of QASM code',
+  })
+  .option('color', {
+    alias: 'c',
+    default: false,
+    type: 'boolean',
+    description: 'Whether to include ansi colors in log output',
   })
   .demandCommand(1)
   .strictOptions()
   .showHelpOnFail(true)
   .parseSync()
+
+$c.enabled = argv.color
 
 const fileArg = process.argv[2]
 const filename = path.resolve(process.cwd(), fileArg)
