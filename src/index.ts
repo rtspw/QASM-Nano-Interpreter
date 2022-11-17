@@ -1,6 +1,7 @@
 import * as path from 'path'
 import yargs from 'yargs'
 
+import printMetrics from './metric-printer'
 import QASMRuntime from './qasm-runtime'
 
 const argv = yargs
@@ -14,6 +15,12 @@ const argv = yargs
     type: 'boolean',
     description: 'Output state and operation of each step in simulation',
   })
+  .option('metrics', {
+    alias: 'm',
+    default: false,
+    type: 'boolean',
+    description: 'Whether to run metrics on execution of QASM code'
+  })
   .demandCommand(1)
   .strictOptions()
   .showHelpOnFail(true)
@@ -21,10 +28,14 @@ const argv = yargs
 
 const fileArg = process.argv[2]
 const filename = path.resolve(process.cwd(), fileArg)
-const runtime = new QASMRuntime({ verbose: argv.verbose })
+const runtime = new QASMRuntime({ verbose: argv.verbose, runMetrics: argv.metrics })
 
 try {
   console.log(runtime.executeFromFile(filename).toString())
+  if (argv.metrics) {
+    console.log()
+    printMetrics(runtime.getMetrics())
+  }
 } catch (err: any) {
   if (err.code === 'ENOENT') {
     console.error(`File '${filename}' does not exist`)
