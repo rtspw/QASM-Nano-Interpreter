@@ -1,5 +1,5 @@
 import { plot } from 'nodeplotlib'
-import QASMRuntime from './qasm-runtime'
+import QASMRuntime from './runtime/qasm-runtime'
 
 /* Generates a integer between [0, max) */
 function generateRandomNumber(max: number) {
@@ -35,10 +35,8 @@ function generateFakeQASMFile(numQubits: number, numOps: number) {
   return `${header}\n${ops.join('\n')}`
 }
 
-
-
 const numQubitsTests = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-const numOpsTests = [100, 200, 300] //1000, 2500, 5000, 10000]
+const numOpsTests = [100, 200, 300]
 const avgTimePerOpResult: { [key: string]: number } = {}
 const totalTimeResult: { [key: string]: number } = {}
 

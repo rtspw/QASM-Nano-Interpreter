@@ -4,8 +4,8 @@ import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor
 import { ProgramContext } from '../grammar/QASMParser'
 import { QASMVisitor } from '../grammar/QASMVisitor'
 
-import QASMRuntimeMetrics from '../qasm-runtime-metrics'
-import QubitState from '../qubit-state'
+import QASMRuntimeMetrics from '../runtime/qasm-runtime-metrics'
+import QubitState from '../runtime/qubit-state'
 import StatementInfoVisitor from './StatementVisitor'
 
 

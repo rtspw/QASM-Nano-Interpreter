@@ -2,11 +2,11 @@ import * as fs from 'fs'
 import $c from 'ansi-colors'
 import { CharStreams, CommonTokenStream } from 'antlr4ts'
 
-import { QASMLexer } from './grammar/QASMLexer'
-import { QASMParser } from './grammar/QASMParser'
+import { QASMLexer } from '../grammar/QASMLexer'
+import { QASMParser } from '../grammar/QASMParser'
 
-import BitCountVisitor from './visitors/BitCountVisitor'
-import RunnerVisitor from './visitors/RunnerVisitor'
+import BitCountVisitor from '../visitors/BitCountVisitor'
+import RunnerVisitor from '../visitors/RunnerVisitor'
 import QASMRuntimeMetrics from './qasm-runtime-metrics'
 
 export interface QASMRuntimeOptions {

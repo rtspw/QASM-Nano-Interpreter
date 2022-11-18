@@ -2,8 +2,8 @@ import * as path from 'path'
 import yargs from 'yargs'
 import $c from 'ansi-colors'
 
-import printMetrics from './metric-printer'
-import QASMRuntime from './qasm-runtime'
+import printMetrics from './runtime/metric-printer'
+import QASMRuntime from './runtime/qasm-runtime'
 
 const argv = yargs
   .usage('$0 <filename>')
