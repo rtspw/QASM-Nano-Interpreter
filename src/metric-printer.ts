@@ -7,18 +7,14 @@ export default function printMetrics(metrics: QASMRuntimeMetrics) {
   metrics.opCounts
   metrics.totalOpCount
   metrics.totalParseTime
-  metrics.totalRuntime    
+  metrics.totalRuntime
 
-  console.log($c.bold.bgGreen('Metrics'))
-  console.log('--------------------------------')
-  console.log(`Total Parsing Time: ${ $c.magenta(`${metrics.totalParseTime}ms`) }`)
-  console.log(`Total Execution Time: ${ $c.magenta(`${metrics.totalRuntime}ms`) }`)
-  console.log()
-  console.log(`Number of Operations: ${ $c.magenta(`${metrics.totalOpCount} ops`) }`)
+  console.log(`Total Parsing Time: ${$c.magenta(`${metrics.totalParseTime}ms`)}`)
+  console.log(`Total Execution Time: ${$c.magenta(`${metrics.totalRuntime}ms`)}`)
+  console.log(`Number of Operations: ${$c.magenta(`${metrics.totalOpCount} ops`)}`)
   console.log($c.bold.dim(`Opname\t| Count`))
-  Object.entries(metrics.opCounts).sort().forEach(([k, v]) => { console.log(`  ${k}\t| ${ $c.magenta(v.toString()) }`) })
-  console.log()
-  console.log(`Average Time Per Operation: ${ $c.magenta(`${metrics.averageTimePerOp}ms`) }`)
+  Object.entries(metrics.opCounts).sort().forEach(([k, v]) => { console.log(`  ${k}\t| ${$c.magenta(v.toString())}`) })
+  console.log(`Average Time Per Operation: ${$c.magenta(`${metrics.averageTimePerOp}ms`)}`)
   console.log($c.bold.dim(`Opname\t| Average Time (ms)`))
-  Object.entries(metrics.averageTimePerOpBreakdown).sort().forEach(([k, v]) => { console.log(`  ${k}\t| ${ $c.magenta(v.toPrecision(5).toString()) }`) })
+  Object.entries(metrics.averageTimePerOpBreakdown).sort().forEach(([k, v]) => { console.log(`  ${k}\t| ${$c.magenta(v.toPrecision(5).toString())}`) })
 }
