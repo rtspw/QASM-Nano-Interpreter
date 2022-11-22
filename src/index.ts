@@ -6,10 +6,14 @@ import printMetrics from './runtime/metric-printer'
 import QASMRuntime from './runtime/qasm-runtime'
 
 const argv = yargs
-  .usage('$0 <filename>')
   .version('0.0.1')
   .help()
   .alias('h', 'help')
+  .option('file', {
+    alias: 'f',
+    type: 'string',
+    description: 'QASM file to run and interpret'
+  })
   .option('verbose', {
     alias: 'v',
     default: false,
@@ -28,30 +32,33 @@ const argv = yargs
     type: 'boolean',
     description: 'Whether to include ansi colors in log output',
   })
-  .demandCommand(1)
   .strictOptions()
   .showHelpOnFail(true)
   .parseSync()
 
 $c.enabled = argv.color
 
-const fileArg = process.argv[2]
-const filename = path.resolve(process.cwd(), fileArg)
 const runtime = new QASMRuntime({ verbose: argv.verbose, runMetrics: argv.metrics })
 
-try {
-  const finalState = runtime.executeFromFile(filename)
-  console.log(`Final state: ${finalState}`)
-  if (argv.metrics) {
-    console.log()
-    printMetrics(runtime.getMetrics())
-  }
-} catch (err: any) {
-  if (err.code === 'ENOENT') {
-    console.error(`File '${filename}' does not exist`)
-  } else if (err.code === 'EISDIR') {
-    console.error(`File ${filename} is a directory`)
-  } else {
-    throw err
+if (!argv.file) {
+  runtime.runREPL()
+} else {
+  const fileArg = argv.file
+  const filename = path.resolve(process.cwd(), fileArg)
+  try {
+    const finalState = runtime.executeFromFile(filename)
+    console.log(`Final state: ${finalState}`)
+    if (argv.metrics) {
+      console.log()
+      printMetrics(runtime.getMetrics())
+    }
+  } catch (err: any) {
+    if (err.code === 'ENOENT') {
+      console.error(`File '${filename}' does not exist`)
+    } else if (err.code === 'EISDIR') {
+      console.error(`File ${filename} is a directory`)
+    } else {
+      throw err
+    }
   }
 }
